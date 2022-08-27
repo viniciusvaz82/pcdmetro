@@ -19,7 +19,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   TextEditingController sentido2 = new TextEditingController();
-  TextEditingController site = new TextEditingController();
   TextEditingController sentido1 = new TextEditingController();
   var alpha = 0.5;
 
@@ -47,7 +46,7 @@ class _HomeState extends State<Home> {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 22,
+                      fontSize: 30,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.italic),
                 ),
