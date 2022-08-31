@@ -110,81 +110,114 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            Container(
-              //Box Cadeirante Motorizada
+            SizedBox(
+              //Box de Sentido2
               width: 500,
-              height: 60,
-              //alignment: Alignment.topLeft,
-              decoration:
-                  const BoxDecoration(color: Color.fromRGBO(0, 76, 159, 1.000)),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Image(
-                  image: AssetImage(
-                    "assets/images/motorizada_cc.png",
-                  ),
-                  //opacity: ,
-                  fit: BoxFit.contain,
-                  width: 200,
-                ),
-              ),
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: TextButton(
+                      onPressed: () {},
+                      child: Text("Confirmar PCDs",
+                          style: TextStyle(color: Colors.white)),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Color.fromARGB(255, 74, 159, 0))))),
             ),
-            Container(
-              //Box Def Visual
-              width: 500,
-              height: 60,
-              //alignment: Alignment.topLeft,
-              decoration:
-                  const BoxDecoration(color: Color.fromRGBO(0, 76, 159, 1.000)),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Image(
-                  image: AssetImage(
-                    "assets/images/deficientevisual_cc.png",
+            InkWell(
+              child: Container(
+                //Box Cadeirante Motorizada
+                width: 500,
+                height: 60,
+                //alignment: Alignment.topLeft,
+                decoration: const BoxDecoration(
+                    color: Color.fromRGBO(0, 76, 159, 1.000)),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      "assets/images/motorizada_cc.png",
+                    ),
+                    //opacity: ,
+                    fit: BoxFit.contain,
+                    width: 200,
                   ),
-                  //opacity: ,
-                  fit: BoxFit.contain,
-                  width: 200,
                 ),
               ),
+              onTap: () {
+                print("teste motorizada");
+              },
             ),
-            Container(
-              //Box Cadeirante
-              width: 500,
-              height: 60,
-              //alignment: Alignment.topLeft,
-              decoration:
-                  const BoxDecoration(color: Color.fromRGBO(0, 76, 159, 1.000)),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Image(
-                  image: AssetImage(
-                    "assets/images/cadeirante_cc.png",
+            InkWell(
+              child: Container(
+                //Box Def Visual
+                width: 500,
+                height: 60,
+                //alignment: Alignment.topLeft,
+                decoration: const BoxDecoration(
+                    color: Color.fromRGBO(0, 76, 159, 1.000)),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      "assets/images/deficientevisual_cc.png",
+                    ),
+                    //opacity: ,
+                    fit: BoxFit.contain,
+                    width: 200,
                   ),
-                  //opacity: ,
-                  fit: BoxFit.contain,
-                  width: 200,
                 ),
               ),
+              onTap: () {
+                print("teste visual");
+              },
             ),
-            Container(
-              //Box Outros
-              width: 500,
-              height: 60,
-              //alignment: Alignment.topLeft,
-              decoration:
-                  const BoxDecoration(color: Color.fromRGBO(0, 76, 159, 1.000)),
-              child: const Padding(
-                padding: EdgeInsets.all(10),
-                child: Image(
-                  image: AssetImage(
-                    "assets/images/deficienteoutros_cc.png",
+            InkWell(
+              child: Container(
+                //Box Cadeirante
+                width: 500,
+                height: 60,
+                //alignment: Alignment.topLeft,
+                decoration: const BoxDecoration(
+                    color: Color.fromRGBO(0, 76, 159, 1.000)),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      "assets/images/cadeirante_cc.png",
+                    ),
+                    //opacity: ,
+                    fit: BoxFit.contain,
+                    width: 200,
                   ),
-                  //opacity: ,
-                  fit: BoxFit.contain,
-                  width: 200,
                 ),
               ),
+              onTap: () {
+                print("teste cadeirante");
+              },
+            ),
+            InkWell(
+              child: Container(
+                //Box Outros
+                width: 500,
+                height: 60,
+                //alignment: Alignment.topLeft,
+                decoration: const BoxDecoration(
+                    color: Color.fromRGBO(0, 76, 159, 1.000)),
+                child: const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Image(
+                    image: AssetImage(
+                      "assets/images/deficienteoutros_cc.png",
+                    ),
+                    //opacity: ,
+                    fit: BoxFit.contain,
+                    width: 200,
+                  ),
+                ),
+              ),
+              onTap: () {
+                print("teste outros tipos");
+              },
             ),
           ],
         ),
