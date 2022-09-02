@@ -156,10 +156,7 @@ class _estacaoOcorrenciaState extends State<estacaoOcorrencia> {
                   padding: EdgeInsets.all(10),
                   child: TextButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomeEstacao()));
+                        Navigator.pop(context);
                       },
                       child:
                           Text("Voltar", style: TextStyle(color: Colors.white)),
