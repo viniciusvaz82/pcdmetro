@@ -34,7 +34,7 @@ class _HomeEstacaoState extends State<HomeEstacao> {
               width: 500,
               child: Padding(
                 padding: EdgeInsets.all(10),
-                child: Text(
+                /*child: Text(
                   "Estação - Sé", //aqui tem que puxar da informação do login
                   textAlign: TextAlign.left,
                   style: TextStyle(
@@ -42,10 +42,10 @@ class _HomeEstacaoState extends State<HomeEstacao> {
                       fontSize: 30,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.italic),
-                ),
+                ),*/
               ),
             ),
-            SizedBox(
+            /*SizedBox(
               //Box de Sentido1
               width: 500,
               child: Padding(
@@ -115,7 +115,7 @@ class _HomeEstacaoState extends State<HomeEstacao> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
                               Color.fromARGB(255, 74, 159, 0))))),
-            ),
+            ),*/
             InkWell(
               child: Container(
                 //Box Cadeirante Motorizada
