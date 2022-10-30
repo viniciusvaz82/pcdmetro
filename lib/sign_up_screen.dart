@@ -1,111 +1,196 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pcdmetro/models/user_model.dart';
 import 'package:pcdmetro/src/custom_text_field.dart';
+import 'package:pcdmetro/values/custom_colors.dart';
 
-class SignUpScreen extends StatelessWidget {
-  final dropValue = ValueNotifier('');
-  final dropOpcoes = [
-    'Estagiário',
-    'Operador 1',
-    'Operador 2',
-    'Segurança',
-    'Supervisor',
-    'Outros'
-  ];
+class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
-  final idFormatter = MaskTextInputFormatter(
-    mask: '######-#',
-    filter: {'#': RegExp(r'[0-9]')},
-  );
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController _nameInputController = TextEditingController();
+  TextEditingController _mailInputController = TextEditingController();
+  TextEditingController _passwordInputController = TextEditingController();
+  TextEditingController _confirmInputController = TextEditingController();
+  bool showPassword = false;
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
-      backgroundColor: Colors.blue.shade600,
-      body: SingleChildScrollView(
-        child: SizedBox(
-          height: size.height,
-          width: size.width,
-          child: Stack(
+      body: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 50,
+          horizontal: 50,
+        ),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              CustomColors().getGradientSecColor(),
+              CustomColors().getGradientMainColor(),
+            ],
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              Column(
-                children: [
-                  const Expanded(
-                    child: Center(
-                      child: Text(
-                        'Cadastro Funcionário',
-                        style: TextStyle(
+              Text(
+                'Cadastro',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Form(
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameInputController,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: 'Nome',
+                        labelStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: 35,
                         ),
-                      ),
-                    ),
-                  ),
-
-                  //Formulário
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 32,
-                      vertical: 40,
-                    ),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(45),
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        CustomTextField(
-                          icon: Icons.card_membership,
-                          label: 'ID',
-                          inputFormatters: [idFormatter],
+                        prefixIcon: Icon(
+                          Icons.person,
+                          color: Colors.white,
                         ),
-                        const CustomTextField(
-                          icon: Icons.lock,
-                          label: 'Senha',
-                          isSecret: true,
-                        ),
-                        const CustomTextField(
-                            icon: Icons.person, label: 'Nome'),
-                        const CustomTextField(
-                            icon: Icons.work, label: 'Função'),
-                        SizedBox(
-                          height: 50,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: const Text(
-                              'Cadastrar Funcionário',
-                              style: TextStyle(fontSize: 18),
-                            ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
                           ),
                         ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextFormField(
+                      controller: _mailInputController,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.mail_outline,
+                          color: Colors.white,
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextFormField(
+                      controller: _passwordInputController,
+                      obscureText: (this.showPassword == true) ? false : true,
+                      decoration: InputDecoration(
+                        labelText: 'Senha',
+                        labelStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    (this.showPassword == false)
+                        ? TextFormField(
+                            controller: _confirmInputController,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Confirme a senha',
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: Colors.white,
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: showPassword,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                showPassword = value!;
+                              },
+                            );
+                          },
+                        ),
+                        Text(
+                          'Mostrar Senha',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              Positioned(
-                left: 10,
-                top: 10,
-                child: SafeArea(
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
+              ElevatedButton(
+                onPressed: () {
+                  _doSignUp();
+                },
+                child: Text('Cadastrar'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
                   ),
                 ),
               ),
@@ -113,6 +198,15 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _doSignUp() {
+    User newUser = User(
+      name: _nameInputController.text,
+      mail: _mailInputController.text,
+      password: _passwordInputController.text,
+      keepOn: true,
     );
   }
 }

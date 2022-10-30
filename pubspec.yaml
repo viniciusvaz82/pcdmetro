@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   animated_text_kit: ^4.2.2
   mask_text_input_formatter: ^2.4.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
      - assets/images/deficientevisual_cc.png
      - assets/images/cadeirante_cc.png
      - assets/images/deficienteoutros_cc.png
+     - assets/images/metro-sp-logo-9.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
