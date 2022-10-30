@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pcdmetro/src/custom_text_field.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+
+//Future<String?> mailRegister(String mail, String pwd) async {
+//  try {
+//    await FirebaseAuth.instance
+//        .createUserWithEmailAndPassword(email: mail, password: pwd);
+//    return null;
+//  } on FirebaseAuthException catch (ex) {
+//    return "${ex.code}: ${ex.message}";
+//  }
+//}
 
 class SignUpScreen extends StatelessWidget {
   final dropValue = ValueNotifier('');
@@ -115,4 +126,11 @@ class SignUpScreen extends StatelessWidget {
       ),
     );
   }
+
+  // login() async {
+  //   try {
+  //     UserCredential userCredential = await _firebaseAuth
+  //         .signInWithEmailAndPassword(email: _email.text, password: _pass.text);
+  //   } on FirebaseAuthException catch (e) {}
+  // }
 }

@@ -4,6 +4,8 @@ import 'package:pcdmetro/HomeEstacao.dart';
 import 'package:pcdmetro/selecionaEstacao.dart';
 import 'package:pcdmetro/sign_up_screen.dart';
 import 'package:pcdmetro/src/custom_text_field.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pcdmetro/loginTest.dart'; // <--testando
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -168,7 +170,7 @@ class SignInScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (c) {
-                            return SignUpScreen();
+                            return testCadastro(); // SignUpScreen(); //
                           }),
                         );
                       },
