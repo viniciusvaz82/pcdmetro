@@ -181,7 +181,7 @@ class _testCadastroState extends State<testCadastro> {
         ));
       } else if (e.code == 'email-already-in-use') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Email já em cadastrado'),
+          content: Text('Email já cadastrado'),
           backgroundColor: Colors.redAccent,
         ));
       }
