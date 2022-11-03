@@ -4,7 +4,9 @@ import 'package:pcdmetro/HomeEstacao.dart';
 import 'package:pcdmetro/selecionaEstacao.dart';
 import 'package:pcdmetro/sign_up_screen.dart';
 import 'package:pcdmetro/src/custom_text_field.dart';
-import 'package:pcdmetro/values/custom_colors.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pcdmetro/loginTest.dart';
+import 'package:pcdmetro/values/custom_colors.dart'; // <--testando
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -14,8 +16,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  TextEditingController _mailInputController = TextEditingController();
-  TextEditingController _passwordInputController = TextEditingController();
+  final _mail = TextEditingController();
+  final _pass = TextEditingController();
 
   bool showPassword = false;
 
@@ -64,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _mailInputController,
+                      controller: _mail,
                       autofocus: true,
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -88,7 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     TextFormField(
-                      controller: _passwordInputController,
+                      controller: _pass,
                       obscureText: (this.showPassword == true) ? false : true,
                       decoration: InputDecoration(
                         labelText: 'Senha',
@@ -211,10 +213,5 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
-  }
-
-  void _doLogin() {
-    String mailForm = this._mailInputController.text;
-    String passForm = this._passwordInputController.text;
   }
 }

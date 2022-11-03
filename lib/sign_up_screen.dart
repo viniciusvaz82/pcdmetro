@@ -1,8 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:pcdmetro/models/user_model.dart';
+import 'package:pcdmetro/HomeEstacao.dart';
 import 'package:pcdmetro/src/custom_text_field.dart';
 import 'package:pcdmetro/values/custom_colors.dart';
+
+//import 'package:firebase_auth/firebase_auth.dart';
+
+//Future<String?> mailRegister(String mail, String pwd) async {
+//  try {
+//    await FirebaseAuth.instance
+//        .createUserWithEmailAndPassword(email: mail, password: pwd);
+//    return null;
+//  } on FirebaseAuthException catch (ex) {
+//    return "${ex.code}: ${ex.message}";
+//  }
+//}
 
 class SignUpScreen extends StatefulWidget {
   SignUpScreen({Key? key}) : super(key: key);
@@ -12,10 +25,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController _nameInputController = TextEditingController();
-  TextEditingController _mailInputController = TextEditingController();
-  TextEditingController _passwordInputController = TextEditingController();
-  TextEditingController _confirmInputController = TextEditingController();
+  final _email = TextEditingController();
+  final _pass = TextEditingController();
+  final _cargo = TextEditingController();
+  final _nome = TextEditingController();
+  final _confirmPass = TextEditingController();
+  final _firebaseAuth = FirebaseAuth.instance;
   bool showPassword = false;
 
   @override
@@ -53,7 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _nameInputController,
+                      controller: _nome,
                       autofocus: true,
                       decoration: InputDecoration(
                         labelText: 'Nome',
@@ -77,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     TextFormField(
-                      controller: _mailInputController,
+                      controller: _email,
                       autofocus: true,
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -101,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     TextFormField(
-                      controller: _passwordInputController,
+                      controller: _pass,
                       obscureText: (this.showPassword == true) ? false : true,
                       decoration: InputDecoration(
                         labelText: 'Senha',
@@ -131,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     (this.showPassword == false)
                         ? TextFormField(
-                            controller: _confirmInputController,
+                            controller: _confirmPass,
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Confirme a senha',
@@ -185,12 +200,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  _doSignUp();
+                  cadastrar();
                 },
                 child: Text('Cadastrar'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Voltar'),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    backgroundColor: Colors.grey,
                   ),
                 ),
               ),
@@ -201,12 +233,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void _doSignUp() {
-    User newUser = User(
-      name: _nameInputController.text,
-      mail: _mailInputController.text,
-      password: _passwordInputController.text,
-      keepOn: true,
-    );
+  void cadastrar() async {
+    User? user;
+    try {
+      UserCredential userCredential =
+          await _firebaseAuth.createUserWithEmailAndPassword(
+              email: _email.text, password: _pass.text);
+      // ignore: deprecated_member_use
+      await user?.updateDisplayName(_nome.text);
+
+      if (userCredential != null) {
+        userCredential.user!.updateDisplayName(_nome.text);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomeEstacao()),
+            (route) => false);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Crie uma senha mais forte'),
+          backgroundColor: Colors.redAccent,
+        ));
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Email já cadastrado'),
+          backgroundColor: Colors.redAccent,
+        ));
+      }
+    }
   }
 }
