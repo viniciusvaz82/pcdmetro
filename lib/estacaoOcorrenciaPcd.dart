@@ -5,18 +5,22 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:pcdmetro/HomeEstacao.dart';
+import 'package:pcdmetro/models/embarque.dart';
+import 'package:pcdmetro/models/estacao.dart';
 
 class estacaoOcorrencia extends StatefulWidget {
   //const estacaoOcorrencia({Key? key}) : super(key: key);
   String tipo;
+
   estacaoOcorrencia(this.tipo);
+
   @override
   State<estacaoOcorrencia> createState() => _estacaoOcorrenciaState();
 }
 
 class _estacaoOcorrenciaState extends State<estacaoOcorrencia> {
-  TextEditingController nome = new TextEditingController();
-  TextEditingController desembarque = new TextEditingController();
+  TextEditingController origem = new TextEditingController();
+  TextEditingController idtrem = new TextEditingController();
   TextEditingController especial = new TextEditingController();
 
   @override
@@ -70,13 +74,13 @@ class _estacaoOcorrenciaState extends State<estacaoOcorrencia> {
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: TextFormField(
-                  controller: nome,
+                  controller: origem,
                   decoration: InputDecoration(
                       border: UnderlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       filled: true,
                       fillColor: Colors.white,
-                      labelText: 'Nome. . .',
+                      labelText: 'Origem. . .',
                       //counterText: '',
                       //contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
                       labelStyle: TextStyle(
@@ -93,13 +97,13 @@ class _estacaoOcorrenciaState extends State<estacaoOcorrencia> {
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: TextFormField(
-                  controller: desembarque,
+                  controller: idtrem,
                   decoration: InputDecoration(
                       border: UnderlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       filled: true,
                       fillColor: Colors.white,
-                      labelText: 'Desembarque. . .',
+                      labelText: 'Trem. . .',
                       //counterText: '',
                       //contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
                       labelStyle: TextStyle(

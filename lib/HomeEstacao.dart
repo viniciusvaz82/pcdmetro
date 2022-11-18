@@ -4,8 +4,13 @@ import 'dart:io';
 //import 'dart:async';
 import 'dart:convert';
 import 'estacaoOcorrenciaPcd.dart';
+import 'models/embarque.dart';
+import 'models/desembarque.dart';
+import 'models/estacao.dart';
 
 class HomeEstacao extends StatefulWidget {
+  get estacao => null;
+
   @override
   State<HomeEstacao> createState() => _HomeEstacaoState();
 }
@@ -138,9 +143,10 @@ class _HomeEstacaoState extends State<HomeEstacao> {
               ),
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => estacaoOcorrencia("motorizada")));
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => estacaoOcorrencia('motorizada')),
+                );
                 print("teste motorizada");
               },
             ),

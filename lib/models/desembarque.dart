@@ -1,7 +1,7 @@
 class Desembarque {
   String trem;
   String origem;
-  String pcd;
+  String tipo;
 
-  Desembarque({required this.pcd, required this.trem, required this.origem});
+  Desembarque({required this.trem, required this.origem, required this.tipo});
 }

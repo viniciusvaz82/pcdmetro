@@ -26,7 +26,7 @@ class _SelecionaEstacaoState extends State<SelecionaEstacao> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Seleciona Estação'),
+        title: const Text('Selecione o destino'),
       ),
       body: ListView.separated(
         itemBuilder: (BuildContext contexto, int estacao) {
