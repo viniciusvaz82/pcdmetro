@@ -19,9 +19,30 @@ class AdddesembarquePage extends StatefulWidget {
 }
 
 class _AdddesembarquePageState extends State<AdddesembarquePage> {
-  final _origem = TextEditingController();
+  final _selectedValOrigem = [
+    'Corinthians-Itaquera',
+    'Artur Alvim',
+    'Patriarca',
+    'Guilhermina Esperança',
+    'Vila Matilde',
+    'Penha',
+    'Carrão',
+    'Tatuapé',
+    'Belém',
+    'Bresser-Mooca',
+    'Bras',
+    'Pedro II',
+    'Sé',
+    'Anhangabau',
+    'Republica',
+    'Santa Cecília',
+    'Marechal Deodoro',
+    'Barra-Funda',
+  ];
+  final _selectedValTrem = ['H51', 'H52', 'H53'];
+  String? _origem = 'Corinthians-Itaquera';
   Tipo? _tipo;
-  final _trem = TextEditingController();
+  String? _trem = 'H51';
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -31,140 +52,202 @@ class _AdddesembarquePageState extends State<AdddesembarquePage> {
       appBar: AppBar(
         title: Text('Embarcar Passageiro'),
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(24),
-                child: TextFormField(
-                  controller: _origem,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'origem:'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Insira a origem!';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                child: TextFormField(
-                  controller: _trem,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: 'trem:'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Insira o id do trem!';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 24),
-                child: RadioListTile<Tipo>(
-                  value: Tipo.Visual,
-                  groupValue: _tipo,
-                  title: Image(
-                    image: AssetImage(
-                      "assets/images/deficientevisual_cc.png",
-                    ),
-                  ),
-                  onChanged: (val) {
-                    setState(() {
-                      _tipo = val!;
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 24),
-                child: RadioListTile<Tipo>(
-                  groupValue: _tipo,
-                  value: Tipo.CadComum,
-                  title: Image(
-                    image: AssetImage(
-                      "assets/images/cadeirante_cc.png",
-                    ),
-                  ),
-                  onChanged: (val) {
-                    setState(() {
-                      _tipo = val!;
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 24),
-                child: RadioListTile<Tipo>(
-                  groupValue: _tipo,
-                  value: Tipo.CadMotorizada,
-                  title: Image(
-                    image: AssetImage(
-                      "assets/images/motorizada_cc.png",
-                    ),
-                  ),
-                  onChanged: (val) {
-                    setState(() {
-                      _tipo = val!;
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 24),
-                child: RadioListTile<Tipo>(
-                  groupValue: _tipo,
-                  value: Tipo.RestMob,
-                  title: Image(
-                    image: AssetImage(
-                      "assets/images/deficienteoutros_cc.png",
-                    ),
-                  ),
-                  onChanged: (val) {
-                    setState(() {
-                      _tipo = val!;
-                    });
-                  },
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(12),
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  margin: EdgeInsets.all(24),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        widget.onSave(Desembarque(
-                            trem: _trem.text,
-                            origem: _origem.text,
-                            tipo: _tipo.toString()));
-                      }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.check),
-                        Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Text(
-                            'Embarcar',
-                            style: TextStyle(fontSize: 20),
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/fundo.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(24),
+                      child: DropdownButtonFormField(
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        value: _origem,
+                        items: _selectedValOrigem.map((e) {
+                          return DropdownMenuItem(
+                            child: Text(e),
+                            value: e,
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          setState(() {
+                            _origem = val as String;
+                          });
+                        },
+                        dropdownColor: Colors.white,
+                        decoration: InputDecoration(
+                          labelText: 'Origem',
+                          prefixIcon: Icon(Icons.subway, color: Colors.white),
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                      child: DropdownButtonFormField(
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        value: _trem,
+                        items: _selectedValTrem.map((e) {
+                          return DropdownMenuItem(
+                            child: Text(e),
+                            value: e,
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          setState(() {
+                            _trem = val as String;
+                          });
+                        },
+                        dropdownColor: Colors.lightBlue.shade50,
+                        decoration: InputDecoration(
+                          labelText: 'Trem',
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.train,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+                      child: RadioListTile<Tipo>(
+                        activeColor: Colors.white,
+                        value: Tipo.Visual,
+                        groupValue: _tipo,
+                        title: Image(
+                          image: AssetImage(
+                            "assets/images/deficientevisual_cc.png",
+                          ),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            _tipo = val!;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+                      child: RadioListTile<Tipo>(
+                        activeColor: Colors.white,
+                        groupValue: _tipo,
+                        value: Tipo.CadComum,
+                        title: Image(
+                          image: AssetImage(
+                            "assets/images/cadeirante_cc.png",
+                          ),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            _tipo = val!;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+                      child: RadioListTile<Tipo>(
+                        activeColor: Colors.white,
+                        groupValue: _tipo,
+                        value: Tipo.CadMotorizada,
+                        title: Image(
+                          image: AssetImage(
+                            "assets/images/motorizada_cc.png",
+                          ),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            _tipo = val!;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+                      child: RadioListTile<Tipo>(
+                        activeColor: Colors.white,
+                        groupValue: _tipo,
+                        value: Tipo.outros,
+                        title: Image(
+                          image: AssetImage(
+                            "assets/images/deficienteoutros_cc.png",
+                          ),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            _tipo = val!;
+                          });
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        margin: EdgeInsets.all(24),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              widget.onSave(Desembarque(
+                                  trem: _trem.toString(),
+                                  origem: _origem.toString(),
+                                  tipo: _tipo.toString()));
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.check),
+                              Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Text(
+                                  'Embarcar',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

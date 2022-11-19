@@ -55,8 +55,8 @@ class _EstacaoPageState extends State<EstacaoPage> {
                 text: 'Embarque',
               ),
               Tab(
-                icon: Icon(Icons.home),
-                text: 'Desembarque',
+                icon: Icon(Icons.map),
+                text: 'Mapa',
               ),
             ],
             indicatorColor: Colors.white,
@@ -65,7 +65,16 @@ class _EstacaoPageState extends State<EstacaoPage> {
         body: TabBarView(
           children: [
             desembarques(),
-            HomeEstacao(),
+            Scaffold(
+              body: Container(
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/mapa_sptrans.png"),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
