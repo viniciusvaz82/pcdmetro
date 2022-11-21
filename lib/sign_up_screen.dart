@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:pcdmetro/HomeEstacao.dart';
+import 'package:pcdmetro/sign_in_screen.dart';
 import 'package:pcdmetro/src/custom_text_field.dart';
 import 'package:pcdmetro/values/custom_colors.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 //import 'package:firebase_auth/firebase_auth.dart';
 
@@ -244,9 +246,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       if (userCredential != null) {
         userCredential.user!.updateDisplayName(_nome.text);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Usuário criado com sucesso!'),
+            backgroundColor: Colors.green,
+          ),
+        );
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => HomeEstacao()),
+            MaterialPageRoute(builder: (context) => SignInScreen()),
             (route) => false);
       }
     } on FirebaseAuthException catch (e) {

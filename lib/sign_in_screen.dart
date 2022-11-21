@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pcdmetro/HomeEstacao.dart';
 import 'package:pcdmetro/selecionaEstacao.dart';
@@ -6,7 +7,8 @@ import 'package:pcdmetro/sign_up_screen.dart';
 import 'package:pcdmetro/src/custom_text_field.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pcdmetro/loginTest.dart';
-import 'package:pcdmetro/values/custom_colors.dart'; // <--testando
+import 'package:pcdmetro/values/custom_colors.dart';
+import 'package:firebase_core/firebase_core.dart'; // <--testando
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _mail = TextEditingController();
   final _pass = TextEditingController();
+  final _firebaseAuth = FirebaseAuth.instance;
 
   bool showPassword = false;
 
@@ -160,12 +163,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SelecionaEstacao(),
-                    ),
-                  );
+                  _signIn();
                 },
                 child: Text('Login'),
                 style: ElevatedButton.styleFrom(
@@ -213,5 +211,38 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  void _signIn() async {
+    User? user;
+    try {
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: _mail.text, password: _pass.text);
+      await user?.updateEmail(_mail.text);
+
+      if (userCredential != null) {
+        userCredential.user!.updateEmail(_mail.text);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => SelecionaEstacao()),
+            (route) => false);
+      }
+    } on FirebaseException catch (e) {
+      if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Usuario inexistente!'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Senha incorreta!'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    }
   }
 }
