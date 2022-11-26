@@ -92,12 +92,37 @@ class _EstacaoPageState extends State<EstacaoPage> {
           )
         : ListView.separated(
             itemBuilder: (BuildContext context, int index) {
-              return ListTile(
+              return Dismissible(
+                background: Container(
+                  color: Colors.green,
+                  child: const Icon(Icons.check),
+                ),
+                key: ValueKey<Desembarque>(widget.estacao.desembarques[index]),
+                onDismissed: (DismissDirection direction) {
+                  setState(() {
+                    widget.estacao.desembarques.removeAt(index);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Passageiro recebido na estação!'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  });
+                },
+                child: ListTile(
+                  leading: Icon(Icons.wheelchair_pickup),
+                  title: Text(widget.estacao.desembarques[index].tipo),
+                  subtitle: Text(widget.estacao.desembarques[index].origem),
+                  trailing: Text(widget.estacao.desembarques[index].trem),
+                ),
+              );
+
+              /*return ListTile(
                 leading: Icon(Icons.wheelchair_pickup),
                 title: Text(widget.estacao.desembarques[index].tipo),
                 subtitle: Text(widget.estacao.desembarques[index].origem),
                 trailing: Text(widget.estacao.desembarques[index].trem),
-              );
+              );*/
             },
             separatorBuilder: (_, __) => Divider(),
             itemCount: quantidade,
